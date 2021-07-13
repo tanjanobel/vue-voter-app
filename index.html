@@ -27,7 +27,11 @@
                                     <div class="flex-grow-1 ms-3">
                                         <h5>
                                             {{ entry.title }}
-                                             <span class="float-end text-primary">
+                                             <span
+                                                 class="float-end text-primary"
+                                                 style="cursor:pointer;"
+                                                 v-on:click="upvote(entry.id)"
+                                             >
                                                 <i class="fa fa-chevron-up"></i>
                                                 <strong>{{ entry.votes }}</strong>
                                             </span>
@@ -92,6 +96,12 @@
                        return this.entries.sort((a, b) => {
                            return b.votes - a.votes
                        });
+                   }
+                },
+                methods: {
+                   upvote (entryId) {
+                       const entry = this.entries.find( entry => entry.id === entryId );
+                       entry.votes++;
                    }
                 }
             });
