@@ -16,7 +16,7 @@
                             <div class="card-header">
                                 <h2 class="card-title">
                                     Stimme jetzt ab!
-                                    <span class="float-end">{{ totalVotes }} Stimmen</span>
+                                    <span class="float-end">{{ totalupVotes }} Stimmen</span>
                                 </h2>
                             </div>
                             <div class="card-body">
@@ -42,7 +42,8 @@
                     id: 1,
                     title: 'Spaghetti Bolognese',
                     desc: 'Nudelgericht mit Hackfleischsauce',
-                    votes: 16,
+                    upvotes: 16,
+                    downvotes: 0,
                     author: 'Italien',
                     image: 'https://via.placeholder.com/64'
                 },
@@ -50,7 +51,8 @@
                     id: 2,
                     title: 'Wiener Schnitzel',
                     desc: 'Ein dünnes Schnitzel aus Kalbfleisch.',
-                    votes: 5,
+                    upvotes: 5,
+                    downvotes: 0,
                     author: 'Österreich',
                     image: 'https://via.placeholder.com/64'
                 },
@@ -58,7 +60,8 @@
                     id: 3,
                     title: 'Peking Ente',
                     desc: 'Das kaiserliche Gericht.',
-                    votes: 20,
+                    upvotes: 20,
+                    downvotes: 0,
                     author: 'China',
                     image: 'https://via.placeholder.com/64'
                 },
@@ -66,7 +69,8 @@
                     id: 4,
                     title: 'Gulasch',
                     desc: 'Ein traditionelles Ragout.',
-                    votes: 24,
+                    upvotes: 24,
+                    downvotes: 0,
                     author: 'Ungarn',
                     image: 'https://via.placeholder.com/64'
                 }
@@ -86,14 +90,20 @@
                         </div>
                         <div class="flex-grow-1 ms-3">
                             <h5>
-                                {{ entry.title }}
-                                 <span
-                                     class="float-end text-primary"
-                                     style="cursor:pointer;"
-                                     @click="upvote(entry.id)"
-                                 >
-                                    <i class="fa fa-chevron-up"></i>
-                                    <strong>{{ entry.votes }}</strong>
+                                {{ entry.title }} ({{ votesDifference }})
+                                <span
+                                    class="float-end text-primary"
+                                    style="cursor:pointer;"
+                                    @click="downvote(entry.id)"
+                                >
+                                  <i class="far fa-thumbs-down ms-4"></i> <strong>{{ entry.downvotes }}</strong>
+                                </span>
+                                <span
+                                    class="float-end text-primary"
+                                    style="cursor:pointer;"
+                                    @click="upvote(entry.id)"
+                                >
+                                  <i class="far fa-thumbs-up"></i> <strong>{{ entry.upvotes }}</strong>
                                 </span>
                             </h5>
                             <div>{{ entry.desc }}</div>
@@ -101,10 +111,19 @@
                         </div>
                     </div>
                 `,
+                computed: {
+                    votesDifference () {
+                        return this.entry.upvotes - this.entry.downvotes;
+                    }
+                },
                 methods: {
                     upvote (entryId) {
                         const entry = this.entries.find( entry => entry.id === entryId );
-                        entry.votes++;
+                        entry.upvotes++;
+                    },
+                    downvote (entryId) {
+                        const entry = this.entries.find( entry => entry.id === entryId );
+                        entry.downvotes++;
                     }
                 }
             });
@@ -117,12 +136,12 @@
                 computed: {
                    sortedEntries () {
                        return this.entries.sort((a, b) => {
-                           return b.votes - a.votes
+                           return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes)
                        });
                    },
-                    totalVotes () {
-                       return this.entries.reduce((totalVotes, entry) => {
-                          return totalVotes + entry.votes;
+                    totalupVotes () {
+                       return this.entries.reduce((totalupVotes, entry) => {
+                          return totalupVotes + entry.upvotes;
                        }, 0);
                     }
                 }
