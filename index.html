@@ -19,7 +19,7 @@
                             <div class="card-body">
                                 <div
                                     class="d-flex my-3"
-                                    v-for="entry in entries"
+                                    v-for="entry in sortedEntries"
                                 >
                                     <div class="flex-shrink-0">
                                         <img v-bind:src="entry.image" alt="" class="me-3">
@@ -86,6 +86,13 @@
                el: '#app',
                 data: {
                    entries: entries
+                },
+                computed: {
+                   sortedEntries () {
+                       return this.entries.sort((a, b) => {
+                           return b.votes - a.votes
+                       });
+                   }
                 }
             });
         </script>
