@@ -17,20 +17,23 @@
                                 <h2 class="card-title">Stimme jetzt ab!</h2>
                             </div>
                             <div class="card-body">
-                                <div class="d-flex">
+                                <div
+                                    class="d-flex my-3"
+                                    v-for="entry in entries"
+                                >
                                     <div class="flex-shrink-0">
-                                        <img v-bind:src="entries[0].image" alt="" class="me-3">
+                                        <img v-bind:src="entry.image" alt="" class="me-3">
                                     </div>
                                     <div class="flex-grow-1 ms-3">
                                         <h5>
-                                            {{ entries[0].title }}
-                                            <span class="float-end text-primary">
-                                        <i class="fa fa-chevron-up"></i>
-                                        <strong>{{ entries[0].votes }}</strong>
-                                    </span>
+                                            {{ entry.title }}
+                                             <span class="float-end text-primary">
+                                                <i class="fa fa-chevron-up"></i>
+                                                <strong>{{ entry.votes }}</strong>
+                                            </span>
                                         </h5>
-                                        <div>{{ entries[0].desc }}</div>
-                                        <small class="text-muted">{{ entries[0].author }}</small>
+                                        <div>{{ entry.desc }}</div>
+                                        <small class="text-muted">{{ entry.author }}</small>
                                     </div>
                                 </div>
                             </div>
@@ -48,6 +51,30 @@
                     desc: 'Nudelgericht mit Hackfleischsauce',
                     votes: 16,
                     author: 'Italien',
+                    image: 'https://via.placeholder.com/64'
+                },
+                {
+                    id: 2,
+                    title: 'Wiener Schnitzel',
+                    desc: 'Ein dünnes Schnitzel aus Kalbfleisch.',
+                    votes: 5,
+                    author: 'Österreich',
+                    image: 'https://via.placeholder.com/64'
+                },
+                {
+                    id: 3,
+                    title: 'Peking Ente',
+                    desc: 'Das kaiserliche Gericht.',
+                    votes: 20,
+                    author: 'China',
+                    image: 'https://via.placeholder.com/64'
+                },
+                {
+                    id: 4,
+                    title: 'Gulasch',
+                    desc: 'Ein traditionelles Ragout.',
+                    votes: 24,
+                    author: 'Ungarn',
                     image: 'https://via.placeholder.com/64'
                 }
             ];
