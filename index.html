@@ -18,27 +18,13 @@
                             </div>
                             <div class="card-body">
                                 <div
-                                    class="d-flex my-3"
                                     v-for="entry in sortedEntries"
                                 >
-                                    <div class="flex-shrink-0">
-                                        <img v-bind:src="entry.image" alt="" class="me-3">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <h5>
-                                            {{ entry.title }}
-                                             <span
-                                                 class="float-end text-primary"
-                                                 style="cursor:pointer;"
-                                                 v-on:click="upvote(entry.id)"
-                                             >
-                                                <i class="fa fa-chevron-up"></i>
-                                                <strong>{{ entry.votes }}</strong>
-                                            </span>
-                                        </h5>
-                                        <div>{{ entry.desc }}</div>
-                                        <small class="text-muted">{{ entry.author }}</small>
-                                    </div>
+                                    <entry-component
+                                        v-bind:entry="entry"
+                                        v-bind:entries="sortedEntries"
+                                    >
+                                    </entry-component>
                                 </div>
                             </div>
                         </div>
@@ -86,6 +72,40 @@
 
         <script src="https://unpkg.com/vue"></script>
         <script>
+            Vue.component('entry-component', {
+                props: ['entry', 'entries'],
+                template: `
+                    <div
+                        class="d-flex my-3"
+                    >
+                        <div class="flex-shrink-0">
+                            <img v-bind:src="entry.image" alt="" class="me-3">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5>
+                                {{ entry.title }}
+                                 <span
+                                     class="float-end text-primary"
+                                     style="cursor:pointer;"
+                                     v-on:click="upvote(entry.id)"
+                                 >
+                                    <i class="fa fa-chevron-up"></i>
+                                    <strong>{{ entry.votes }}</strong>
+                                </span>
+                            </h5>
+                            <div>{{ entry.desc }}</div>
+                            <small class="text-muted">{{ entry.author }}</small>
+                        </div>
+                    </div>
+                `,
+                methods: {
+                    upvote (entryId) {
+                        const entry = this.entries.find( entry => entry.id === entryId );
+                        entry.votes++;
+                    }
+                }
+            });
+
             new Vue({
                el: '#app',
                 data: {
@@ -96,12 +116,6 @@
                        return this.entries.sort((a, b) => {
                            return b.votes - a.votes
                        });
-                   }
-                },
-                methods: {
-                   upvote (entryId) {
-                       const entry = this.entries.find( entry => entry.id === entryId );
-                       entry.votes++;
                    }
                 }
             });
