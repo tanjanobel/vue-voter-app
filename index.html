@@ -8,29 +8,30 @@
         <script src="https://kit.fontawesome.com/bc2f9e00c7.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div id="app"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-8 offset-2">
-                    <div class="card mt-5">
-                        <div class="card-header">
-                            <h2 class="card-title">Stimme jetzt ab!</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <img src="https://via.placeholder.com/64" alt="" class="me-3">
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <h5>
-                                        Spaghetti Bolognese
-                                        <span class="float-end text-primary">
+        <div id="app">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8 offset-2">
+                        <div class="card mt-5">
+                            <div class="card-header">
+                                <h2 class="card-title">Stimme jetzt ab!</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0">
+                                        <img v-bind:src="entries[0].image" alt="" class="me-3">
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5>
+                                            {{ entries[0].title }}
+                                            <span class="float-end text-primary">
                                         <i class="fa fa-chevron-up"></i>
-                                        <strong>23</strong>
+                                        <strong>{{ entries[0].votes }}</strong>
                                     </span>
-                                    </h5>
-                                    <div>Nudelgericht mit Hackfleischsauce.</div>
-                                    <small class="text-muted">Eingereicht von: italien</small>
+                                        </h5>
+                                        <div>{{ entries[0].desc }}</div>
+                                        <small class="text-muted">{{ entries[0].author }}</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -39,10 +40,26 @@
             </div>
         </div>
 
+        <script>
+            const entries = [
+                {
+                    id: 1,
+                    title: 'Spaghetti Bolognese',
+                    desc: 'Nudelgericht mit Hackfleischsauce',
+                    votes: 16,
+                    author: 'Italien',
+                    image: 'https://via.placeholder.com/64'
+                }
+            ];
+        </script>
+
         <script src="https://unpkg.com/vue"></script>
         <script>
             new Vue({
-               el: '#app'
+               el: '#app',
+                data: {
+                   entries: entries
+                }
             });
         </script>
     </body>
