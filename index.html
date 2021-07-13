@@ -21,8 +21,8 @@
                                     v-for="entry in sortedEntries"
                                 >
                                     <entry-component
-                                        v-bind:entry="entry"
-                                        v-bind:entries="sortedEntries"
+                                        :entry="entry"
+                                        :entries="sortedEntries"
                                     >
                                     </entry-component>
                                 </div>
@@ -79,7 +79,7 @@
                         class="d-flex my-3"
                     >
                         <div class="flex-shrink-0">
-                            <img v-bind:src="entry.image" alt="" class="me-3">
+                            <img :src="entry.image" alt="" class="me-3">
                         </div>
                         <div class="flex-grow-1 ms-3">
                             <h5>
@@ -87,7 +87,7 @@
                                  <span
                                      class="float-end text-primary"
                                      style="cursor:pointer;"
-                                     v-on:click="upvote(entry.id)"
+                                     @click="upvote(entry.id)"
                                  >
                                     <i class="fa fa-chevron-up"></i>
                                     <strong>{{ entry.votes }}</strong>
